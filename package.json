@@ -1,0 +1,52 @@
+{
+  "name": "learn-nextjs-tutolist",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/lodash": "^4.14.182",
+    "@types/shortid": "^0.0.29",
+    "@types/styled-components": "^5.1.25",
+    "axios": "^0.27.2",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-import-resolver-typescript": "^3.2.6",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.6.0",
+    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-testing-library": "^5.5.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint-webpack-plugin": "^3.2.0",
+    "next": "12.2.2",
+    "prettier": "^2.7.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.5",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.20.0",
+    "eslint-config-next": "12.2.2",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "typescript": "4.7.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.css": "stylelint --fix",
+    "*.{js,css,md}": "prettier --write",
+    "*.js": "eslint --cache --fix"
+  }
+}
