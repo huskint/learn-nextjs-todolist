@@ -21,8 +21,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
-  box-sizing: content-box;
-  height: auto;
+  height: 200px;
   padding: 48px 32px 32px 24px;
   border-bottom: 1px solid #ddd;
 `;
