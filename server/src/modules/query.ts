@@ -1,10 +1,9 @@
 import * as db from '../config/mysql_connect'
 
-export const test0 = async ({ email }: { email: string }) => {
+export const insertTodo = async ({ text }: { text: string }) => {
   try {
-    const SQL =
-      'select id, email, password, type, name, role, user_token, disabled from user where type = 0 and email = ?'
-    const SQL_VALUES = [email]
+    const SQL = 'insert into todo(text) values(?)'
+    const SQL_VALUES = [text]
     const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
     return row
   } catch (e: any) {
