@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
-import { TodoItem } from '@components/todo';
+import { TodoItem } from '@components/todo/index';
 
 import { TodoItemType } from '../../../pages/todolist1';
 

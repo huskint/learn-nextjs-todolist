@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import { Layout } from '@components/layout';
 
-import GlobalStyles from '../ui/core/GlobalStyles';
+import GlobalStyles from '@ui/core/GlobalStyles';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

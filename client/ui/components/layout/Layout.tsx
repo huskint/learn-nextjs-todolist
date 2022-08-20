@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
-import { Page } from '@components/layout';
+import { Page } from '@components/layout/index';
 
 interface Props {
   children?: React.ReactNode;
