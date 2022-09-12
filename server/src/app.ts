@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet({ contentSecurityPolicy: false }))
   app.use(
     cors({
-      origin: ['http://localhost', 'http://localhost:3000'],
+      origin: ['http://localhost', 'http://localhost:3000', 'http://localhost:9052'],
       credentials: true,
     }),
   )

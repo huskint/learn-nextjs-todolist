@@ -5,5 +5,5 @@ create table `todo`
 (
     `id`           int          not null auto_increment primary key,  -- 투두리스트 index
     `text`        varchar(1024),                                      -- 내용
-    `success`     tinyint      not null default 0                    -- 완료 여부
+    `done`     tinyint      not null default 0                    -- 완료 여부
 );
