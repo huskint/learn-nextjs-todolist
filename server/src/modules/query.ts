@@ -12,11 +12,22 @@ export const insertTodo = async ({ text }: { text: string }) => {
   }
 }
 
-export const test1 = async ({ user_token, email }: { user_token: string; email: string }) => {
+export const updateTodo = async ({ id, success }: { id: number; success: number }) => {
   try {
-    const SQL = 'update user set user_token = ? where email = ?'
-    const SQL_VALUES = [user_token, email]
+    const SQL = 'update todo set success = ${success} where id = ${id}'
+    const SQL_VALUES = [success, id]
     const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const getTodoList = async () => {
+  try {
+    const SQL = 'select * from todo'
+    const [row] = await db.connect((con: any) => con.query(SQL))()
     return row
   } catch (e: any) {
     console.error(e)
