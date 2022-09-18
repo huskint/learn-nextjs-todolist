@@ -6,6 +6,7 @@ import { Layout } from '@components/layout';
 import GlobalStyles from '@ui/core/GlobalStyles';
 
 import store from '../lib/store';
+import { TodoStoreProvider } from '../lib/store2/stores';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,11 +15,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>투두 리스트</title>
       </Head>
       <GlobalStyles />
-      <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
+      <TodoStoreProvider>
+        <Provider store={store}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
+      </TodoStoreProvider>
     </>
   );
 }
