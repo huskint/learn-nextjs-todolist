@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { TodoItem } from '@components/todo/index';
 
-import { TodoItemType } from '../../../pages/todolist1';
+import { TodoItemType } from '../../../lib/interface/todo.interface';
 
 interface Props {
   todos: TodoItemType[];
-  onToggleDone: (id: number) => void;
+  onToggleDone: (id: number, done: boolean) => void;
   onClickDelete: (id: number) => void;
 }
 

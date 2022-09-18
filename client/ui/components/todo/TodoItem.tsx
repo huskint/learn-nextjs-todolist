@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDelete, MdDone } from 'react-icons/md';
 
-import { TodoItemType } from '../../../pages/todolist1';
+import { TodoItemType } from '../../../lib/interface/todo.interface';
 
 interface Props {
-  onToggleDone: (id: number) => void;
+  onToggleDone: (id: number, done: boolean) => void;
   onClickDelete: (id: number) => void;
 }
 
@@ -17,10 +17,10 @@ const TodoItem = ({
   onClickDelete,
 }: Props & TodoItemType) => (
   <Container>
-    <CheckCircle done={done} onClick={() => { onToggleDone(id); }}>
+    <CheckCircle done={done} onClick={() => { onToggleDone(id, !done); }}>
       {done && <MdDone />}
     </CheckCircle>
-    <Text done={done}>{text} {id}</Text>
+    <Text done={done}>{text}</Text>
     <Remove onClick={() => { onClickDelete(id); }}>
       <MdDelete />
     </Remove>

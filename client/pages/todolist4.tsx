@@ -1,20 +1,26 @@
 import React, {
-  ChangeEvent, FormEvent, useMemo, useRef, useState,
+  ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState,
 } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import { TodoCreate, TodoHeader, TodoList } from '@components/todo';
 
+import { AppDispatch, RootState } from '../lib/store';
+import {
+  createTodo, deleteTodo, getTodo, toggleDone,
+} from '../lib/store/todoSlice';
 import getDateString from '../lib/utils/getDateString';
-import { TodoItemType } from '../lib/interface/todo.interface';
 
 const { dateString, dayName } = getDateString();
 
-const Todolist1 = () => {
+const Todolist3 = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const todos = useSelector((state: RootState) => state.todo);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [createInput, setCreateInput] = useState('');
-  const [todos, setTodos] = useState<TodoItemType[]>([]);
+  // const [todos, setTodos] = useState<TodoItemType[]>([]);
 
   const unDoneTaskLength = useMemo(() => todos.filter((todo) => !todo.done).length, [todos]);
 
@@ -31,30 +37,44 @@ const Todolist1 = () => {
 
   const onSubmitCreate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    nextId.current += 1;
-    setTodos((prev) => [...prev, { id: nextId.current, text: createInput, done: false }]);
+    // nextId.current += 1;
+    dispatch(createTodo(createInput));
+    // dispatch(getTodo());
+    // setTodos((prev) => [...prev, { id: nextId.current, text: createInput, done: false }]);
     setIsOpenCreate(false);
     setCreateInput('');
   };
 
-  const onToggleDone = (id: number) => {
-    setTodos(
-      (prev) => prev
-        .map((el) => (
-          el.id === id
-            ? ({ ...el, done: !el.done })
-            : el)),
+  const onToggleDone = (id: number, done: boolean) => {
+    dispatch(
+      toggleDone({
+        id,
+        done,
+      }),
     );
+    // setTodos(
+    //   (prev) => prev
+    //     .map((el) => (
+    //       el.id === id
+    //         ? ({ ...el, done: !el.done })
+    //         : el)),
+    // );
   };
 
   const onClickDelete = (id: number) => {
-    setTodos((prev) => prev.filter((el) => (el.id !== id)));
+    dispatch(
+      deleteTodo(id),
+    );
+    // setTodos((prev) => prev.filter((el) => (el.id !== id)));
   };
+
+  useEffect(() => {
+    dispatch(getTodo());
+  }, []);
 
   return (
     <Container>
-      <Link href="/todolist3">투두리스트3</Link>
-      <Link href="/todolist4">투두리스트4</Link>
+      <Link href="/todolist1">투두리스트1</Link>
       <TodoHeader
         dateString={dateString}
         dayName={dayName}
@@ -76,7 +96,7 @@ const Todolist1 = () => {
   );
 };
 
-export default Todolist1;
+export default Todolist3;
 
 const Container = styled.div`
   display: flex;
