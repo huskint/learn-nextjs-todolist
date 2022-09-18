@@ -1,7 +1,7 @@
 import { client } from '../client';
-import { TodoItem } from '../../interface/todo.interface';
+import { TodoItemType } from '../../interface/todo.interface';
 
-export const getTodoList = async (): Promise<TodoItem[]> => {
+export const getTodoList = async (): Promise<TodoItemType[]> => {
   try {
     const url = '/api/todo';
     const { data } = await client.get(url);

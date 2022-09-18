@@ -1,40 +1,24 @@
 import React, {
-  ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState,
+  ChangeEvent, FormEvent, useMemo, useRef, useState,
 } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import { TodoCreate, TodoHeader, TodoList } from '@components/todo';
 
-// eslint-disable-next-line import/no-cycle
 import { RootState } from '../lib/store';
+import { createTodo, deleteTodo, toggleDone } from '../lib/store/todoSlice';
 import getDateString from '../lib/utils/getDateString';
-import { create } from '../lib/store/todoSlice';
 
 const { dateString, dayName } = getDateString();
 
-export interface TodoItemType {
-  id: number;
-  text: string;
-  done: boolean;
-}
-
 const Todolist3 = () => {
   const dispatch = useDispatch();
-  const todoList = useSelector((state: RootState) => state.todo);
-  useEffect(() => {
-    dispatch(create({
-      id: 0,
-      text: '투두리스트 등록 테스트1',
-      done: false,
-    }));
-  }, []);
-  useEffect(() => {
-    console.log('todo Store >', todoList);
-  }, [todoList]);
+  const todos = useSelector((state: RootState) => state.todo);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [createInput, setCreateInput] = useState('');
-  const [todos, setTodos] = useState<TodoItemType[]>([]);
+  // const [todos, setTodos] = useState<TodoItemType[]>([]);
 
   const unDoneTaskLength = useMemo(() => todos.filter((todo) => !todo.done).length, [todos]);
 
@@ -52,27 +36,37 @@ const Todolist3 = () => {
   const onSubmitCreate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     nextId.current += 1;
-    setTodos((prev) => [...prev, { id: nextId.current, text: createInput, done: false }]);
+    dispatch(
+      createTodo({ id: nextId.current, text: createInput, done: false }),
+    );
+    // setTodos((prev) => [...prev, { id: nextId.current, text: createInput, done: false }]);
     setIsOpenCreate(false);
     setCreateInput('');
   };
 
   const onToggleDone = (id: number) => {
-    setTodos(
-      (prev) => prev
-        .map((el) => (
-          el.id === id
-            ? ({ ...el, done: !el.done })
-            : el)),
+    dispatch(
+      toggleDone(id),
     );
+    // setTodos(
+    //   (prev) => prev
+    //     .map((el) => (
+    //       el.id === id
+    //         ? ({ ...el, done: !el.done })
+    //         : el)),
+    // );
   };
 
   const onClickDelete = (id: number) => {
-    setTodos((prev) => prev.filter((el) => (el.id !== id)));
+    dispatch(
+      deleteTodo(id),
+    );
+    // setTodos((prev) => prev.filter((el) => (el.id !== id)));
   };
 
   return (
     <Container>
+      <Link href="/todolist1">투두리스트1</Link>
       <TodoHeader
         dateString={dateString}
         dayName={dayName}

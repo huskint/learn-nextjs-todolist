@@ -2,18 +2,14 @@ import React, {
   ChangeEvent, FormEvent, useMemo, useRef, useState,
 } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 import { TodoCreate, TodoHeader, TodoList } from '@components/todo';
 
 import getDateString from '../lib/utils/getDateString';
+import { TodoItemType } from '../lib/interface/todo.interface';
 
 const { dateString, dayName } = getDateString();
-
-export interface TodoItemType {
-  id: number;
-  text: string;
-  done: boolean;
-}
 
 const Todolist1 = () => {
   const [isOpenCreate, setIsOpenCreate] = useState(false);
@@ -57,6 +53,7 @@ const Todolist1 = () => {
 
   return (
     <Container>
+      <Link href="/todolist3">투두리스트3</Link>
       <TodoHeader
         dateString={dateString}
         dayName={dayName}

@@ -20,7 +20,7 @@ const TodoItem = ({
     <CheckCircle done={done} onClick={() => { onToggleDone(id); }}>
       {done && <MdDone />}
     </CheckCircle>
-    <Text done={done}>{text}</Text>
+    <Text done={done}>{text} {id}</Text>
     <Remove onClick={() => { onClickDelete(id); }}>
       <MdDelete />
     </Remove>
