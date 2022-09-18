@@ -5,7 +5,7 @@ import { MdDelete, MdDone } from 'react-icons/md';
 import { TodoItemType } from '../../../pages/todolist1';
 
 interface Props {
-  onToggleDone: (id: number, done: boolean) => Promise<void>;
+  onToggleDone: (id: number) => void;
   onClickDelete: (id: number) => void;
 }
 
@@ -17,7 +17,7 @@ const TodoItem = ({
   onClickDelete,
 }: Props & TodoItemType) => (
   <Container>
-    <CheckCircle done={done} onClick={() => { onToggleDone(id, !done); }}>
+    <CheckCircle done={done} onClick={() => { onToggleDone(id); }}>
       {done && <MdDone />}
     </CheckCircle>
     <Text done={done}>{text}</Text>
