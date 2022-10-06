@@ -46,3 +46,49 @@ export const getTodoList = async () => {
     throw new Error(e)
   }
 }
+
+export const findUserByEmail = async ({ email }: { email: string }) => {
+  try {
+    const SQL = 'select id, email, password, user_token from user where email = ?'
+    const SQL_VALUES = [email]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const insertUserByEmail = async ({
+  email,
+  password,
+  user_token,
+}: {
+  email: string
+  password: string
+  name: string
+  type: number
+  user_token: string
+}) => {
+  try {
+    const SQL = 'insert into user(email, password, user_token) values(?, ?, ?)'
+    const SQL_VALUES = [email, password, user_token]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row.insertId
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const updateUserTokenByEmail = async ({ user_token, email }: { user_token: string; email: string }) => {
+  try {
+    const SQL = 'update user set user_token = ? where email = ?'
+    const SQL_VALUES = [user_token, email]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}

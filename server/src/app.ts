@@ -8,6 +8,7 @@ import cors from 'cors'
 import config from './config'
 import { errorHandler, logHandler } from './modules/handler'
 import todoRouter from './routes/todoRouter'
+import userRouter from './routes/userRouter'
 
 const app = express()
 const { PORT } = config
@@ -46,6 +47,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/todo', todoRouter)
+app.use('/api/user', userRouter)
 app.use(logHandler)
 app.use(errorHandler)
 
