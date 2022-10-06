@@ -1,9 +1,11 @@
 import React, { createContext, useContext } from 'react';
 
 import todoStore from './todoStore';
+import userStore from './userStore';
 
 const stores = {
   todoStore,
+  userStore,
 };
 
 const TodoContext = createContext(stores);
