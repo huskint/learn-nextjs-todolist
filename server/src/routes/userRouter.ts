@@ -10,7 +10,7 @@ const router = express.Router()
 // 유저 이메일 회원가입
 router.post('/signup', async (req: Request, res: Response) => {
   try {
-    const { email, password, name } = req.body
+    const { email, password } = req.body
     const token = createToken(email)
     console.log(token)
     if (!getValidationUser('email', email)) {
@@ -49,14 +49,12 @@ router.post('/signup', async (req: Request, res: Response) => {
     await db.insertUserByEmail({
       email,
       password: hashPassword,
-      name,
-      type: 0,
       user_token: userToken,
     })
     const [signUpUser] = await db.findUserByEmail({ email })
     res.status(200).json({
       success: true,
-      msg: `${name}님 회원가입 되었습니다.`,
+      msg: `${email}님 회원가입 되었습니다.`,
       data: {
         token: signUpUser.user_token,
         user: signUpUser,
@@ -113,7 +111,7 @@ router.post('/signin', async (req: Request, res: Response, next: NextFunction) =
       success: true,
       msg: `${findByUser.email}님 로그인 되었습니다.`,
       data: {
-        token: findByUser.token,
+        token: findByUser.user_token,
         email: findByUser.email,
       },
     })

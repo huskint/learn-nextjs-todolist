@@ -50,6 +50,7 @@ const Index = () => {
 
   useEffect(() => {
     userStore.clearSignUser();
+    userStore.clearSignUpUser();
     userStore.clearValidationUser();
   }, []);
 

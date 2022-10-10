@@ -9,6 +9,7 @@ import config from './config'
 import { errorHandler, logHandler } from './modules/handler'
 import todoRouter from './routes/todoRouter'
 import userRouter from './routes/userRouter'
+import todoUserRouter from './routes/todoUserRouter'
 
 const app = express()
 const { PORT } = config
@@ -47,6 +48,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/todo', todoRouter)
+app.use('/api/v2/todo', todoUserRouter)
 app.use('/api/user', userRouter)
 app.use(logHandler)
 app.use(errorHandler)

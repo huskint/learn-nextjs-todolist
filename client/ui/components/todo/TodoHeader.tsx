@@ -2,13 +2,20 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  email?: string;
   dateString: string;
   dayName: string;
   unDoneTaskLength: number;
 }
 
-const TodoHeader = ({ dateString, dayName, unDoneTaskLength }: Props) => (
+const TodoHeader = ({
+  email,
+  dateString,
+  dayName,
+  unDoneTaskLength,
+}: Props) => (
   <Container>
+    <UserEmail>{email ?? '없음'}</UserEmail>
     <Title>{dateString}</Title>
     <Description>{dayName}</Description>
     <UnDoneTask>할 일 {unDoneTaskLength}개 남음</UnDoneTask>
@@ -24,6 +31,13 @@ const Container = styled.div`
   height: 200px;
   padding: 48px 32px 32px 24px;
   border-bottom: 1px solid #ddd;
+`;
+
+const UserEmail = styled.h3`
+  font-size: 16px;
+  font-weight: 800;
+  color: #343a40;
+  margin: 0;
 `;
 
 const Title = styled.h1`

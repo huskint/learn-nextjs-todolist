@@ -3,6 +3,7 @@ import { observable } from 'mobx';
 import { UserParam, User, UserValidation } from '../interface/user.interface';
 import { signInUserAPI } from '../api/user/signInUser';
 import { signUpUserAPI } from '../api/user/signUpUser';
+import { AuthUserAPI } from '../api/user/AuthUser';
 
 export interface Store {
   user?: User;
@@ -17,6 +18,7 @@ export interface Store {
   clearValidationUser: () => void;
   signinUser: () => Promise<boolean>;
   signupUser: () => Promise<boolean>;
+  getAuthUser: () => Promise<boolean>;
 }
 
 const initialUserParam = {
@@ -39,21 +41,27 @@ export const store: Store = {
   onChangeSignInUser(key, value) {
     this.signIn[key] = value;
   },
+
   onChangeSignUpUser(key, value) {
     this.signUp[key] = value;
   },
+
   onChangeValidationUser(key, value) {
     this.validation[key] = value;
   },
+
   clearSignUser() {
     this.signIn = initialUserParam;
   },
+
   clearSignUpUser() {
     this.signUp = initialUserParam;
   },
+
   clearValidationUser() {
     this.validation = initialUserValidation;
   },
+
   async signinUser() {
     try {
       const param = {
@@ -65,7 +73,7 @@ export const store: Store = {
       this.user = {
         email: userData.email,
       };
-      localStorage.setItem('token', JSON.stringify(userData.token));
+      localStorage.setItem('token', userData.token as string);
       return true;
     } catch (e) {
       console.log(e);
@@ -73,6 +81,7 @@ export const store: Store = {
       return false;
     }
   },
+
   async signupUser() {
     try {
       const param = {
@@ -84,11 +93,24 @@ export const store: Store = {
       this.user = {
         email: userData.email,
       };
-      localStorage.setItem('token', JSON.stringify(userData.token));
+      localStorage.setItem('token', userData.token as string);
       return true;
     } catch (e) {
       console.log(e);
       alert('회원 정보가 올바르지 않아요.');
+      return false;
+    }
+  },
+
+  async getAuthUser() {
+    try {
+      const response = await AuthUserAPI();
+      const userData: User = response?.data.data.user;
+      this.user = {
+        email: userData.email,
+      };
+      return true;
+    } catch (e) {
       return false;
     }
   },

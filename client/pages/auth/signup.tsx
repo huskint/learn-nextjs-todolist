@@ -28,7 +28,7 @@ const Index = () => {
   );
 
   const handleClickPrev = useCallback(() => {
-    router.back();
+    router.replace('/auth/signin');
   }, []);
 
   const onChangeUser = useCallback((e: ChangeEvent<HTMLInputElement>) => {

@@ -2,18 +2,19 @@ import React, {
   ChangeEvent, FormEvent, useEffect, useMemo, useState,
 } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
+import { useRouter } from 'next/router';
 
 import { TodoCreate, TodoHeader, TodoList } from '@components/todo';
 
 import getDateString from '../lib/utils/getDateString';
-import todoStore from '../lib/store2/todoStore';
+import { useTodoStores } from '../lib/store2/stores';
 
 const { dateString, dayName } = getDateString();
 
 const Todolist3 = () => {
+  const router = useRouter();
+  const { todoStore, userStore } = useTodoStores();
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [createInput, setCreateInput] = useState('');
 
@@ -43,18 +44,30 @@ const Todolist3 = () => {
     todoStore.deleteTodo(id);
   };
 
+  const onClickLogout = () => {
+    localStorage.clear();
+    router.replace('/auth/signin');
+  };
+
+  useEffect(() => {
+    (async () => {
+      const isAuth = await userStore.getAuthUser();
+      if (!isAuth) {
+        alert('회원 정보가 없습니다.');
+        router.replace('/auth/signin');
+      }
+    })();
+  }, []);
+
   useEffect(() => {
     todoStore.getTodo();
   }, []);
 
-  useEffect(() => {
-    console.log(toJS(todoStore.todo));
-  }, [todoStore.todo]);
-
   return (
     <Container>
-      <Link href="/todolist1">투두리스트1</Link>
+      <LogoutButton onClick={onClickLogout}>로그아웃</LogoutButton>
       <TodoHeader
+        email={userStore.user?.email}
         dateString={dateString}
         dayName={dayName}
         unDoneTaskLength={unDoneTaskLength}
@@ -82,4 +95,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+`;
+
+const LogoutButton = styled.button`
+  width: 100px;
 `;

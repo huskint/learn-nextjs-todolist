@@ -47,6 +47,54 @@ export const getTodoList = async () => {
   }
 }
 
+export const insertV2Todo = async ({ email, text }: { email: string; text: string }) => {
+  try {
+    const SQL = 'insert into todo2(email, text) values(?, ?)'
+    const SQL_VALUES = [email, text]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const updateV2Todo = async ({ id, done, email }: { id: number; done: number; email: string }) => {
+  try {
+    const SQL = 'update todo2 set done = ? where id = ? AND email = ?'
+    const SQL_VALUES = [done, id, email]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const deleteV2Todo = async ({ id, email }: { id: number; email: string }) => {
+  try {
+    const SQL = 'delete from todo2 where id = ? AND email = ?'
+    const SQL_VALUES = [id, email]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
+export const getV2TodoList = async ({ email }: { email: string }) => {
+  try {
+    const SQL = 'select * from todo2 where email = ?'
+    const SQL_VALUES = [email]
+    const [row] = await db.connect((con: any) => con.query(SQL, SQL_VALUES))()
+    return row
+  } catch (e: any) {
+    console.error(e)
+    throw new Error(e)
+  }
+}
+
 export const findUserByEmail = async ({ email }: { email: string }) => {
   try {
     const SQL = 'select id, email, password, user_token from user where email = ?'
@@ -66,8 +114,6 @@ export const insertUserByEmail = async ({
 }: {
   email: string
   password: string
-  name: string
-  type: number
   user_token: string
 }) => {
   try {
